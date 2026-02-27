@@ -1,0 +1,13 @@
+{
+  "source_bucket": "mwaa-etl-lab-XXXXX-raw",
+  "source_key": "input/transactions.csv",
+  "destination_bucket": "mwaa-etl-lab-XXXXX-processed",
+  "scripts_bucket": "mwaa-etl-lab-XXXXX-scripts",
+  "athena_results_bucket": "mwaa-etl-lab-XXXXX-athena-results",
+  "glue_database": "etl_lab_db",
+  "glue_job_name": "transactions_etl_job",
+  "raw_crawler_name": "raw_data_crawler",
+  "processed_crawler_name": "processed_data_crawler",
+  "glue_iam_role": "GlueETLRole",
+  "sns_topic_arn": "arn:aws:sns:REGION:ACCOUNT_ID:etl-pipeline-alerts"
+}
