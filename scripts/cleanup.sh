@@ -56,13 +56,13 @@ if aws mwaa get-environment --name ${MWAA_ENV_NAME} --region ${REGION} 2>/dev/nu
     
     # Esperar hasta que el ambiente se elimine
     while aws mwaa get-environment --name ${MWAA_ENV_NAME} --region ${REGION} 2>/dev/null; do
-        echo "   Todavía eliminando..."
+        echo "Todavía eliminando..."
         sleep 60
     done
     
     echo "Ambiente MWAA eliminado"
 else
-    echo " No se encontró ambiente MWAA"
+    echo "No se encontró ambiente MWAA"
 fi
 echo ""
 
@@ -86,7 +86,7 @@ echo "Paso 3/8: Eliminando Glue Crawlers..."
 
 if aws glue get-crawler --name ${RAW_CRAWLER} --region ${REGION} 2>/dev/null; then
     aws glue delete-crawler --name ${RAW_CRAWLER} --region ${REGION}
-    echo "   ✅ Crawler raw eliminado"
+    echo "Crawler raw eliminado"
 else
     echo "No se encontró crawler raw"
 fi
@@ -133,7 +133,7 @@ if aws glue get-database --name ${GLUE_DATABASE} --region ${REGION} 2>/dev/null;
     aws glue delete-database --name ${GLUE_DATABASE} --region ${REGION}
     echo "Base de datos eliminada"
 else
-    echo " No se encontró base de datos"
+    echo "No se encontró base de datos"
 fi
 echo ""
 
@@ -225,5 +225,4 @@ echo "   • SNS Topic: ${SNS_TOPIC}"
 echo "   • IAM Roles: ${GLUE_ROLE_NAME}, ${MWAA_ROLE_NAME}"
 echo "   • Buckets S3: ${PREFIX}-*"
 echo ""
-echo "Ya no se generarán costos por estos recursos"
-echo ""
+
