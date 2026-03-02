@@ -1,7 +1,7 @@
 # MWAA ETL Lab - Pipeline Completo con AWS
 
 ![AWS](https://img.shields.io/badge/AWS-MWAA-orange?logo=amazon-aws)
-![Airflow](https://img.shields.io/badge/Airflow-2.8.x-blue?logo=apache-airflow)
+![Airflow](https://img.shields.io/badge/Airflow-3.0.6-blue?logo=apache-airflow)
 ![Python](https://img.shields.io/badge/Python-3.10-green?logo=python)
 ![License](https://img.shields.io/badge/License-Educational-yellow)
 ![Level](https://img.shields.io/badge/Level-Intermediate-orange)

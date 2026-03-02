@@ -130,7 +130,7 @@ cd scripts
 
 ---
 
-## 📊 Resumen de Tiempos
+## Resumen de Tiempos
 
 | Paso | Tiempo |
 |------|--------|
@@ -141,42 +141,10 @@ cd scripts
 | Cleanup | 20-30 min |
 | **TOTAL** | **~1 hora** |
 
----
-
-## 🐛 Problemas Comunes
-
-### El DAG no aparece en Airflow UI
-**Solución**: Espera 2-3 minutos. Airflow sincroniza cada 5 minutos.
-
-### Error: "Variable not found"
-**Solución**: Verifica que importaste el archivo de variables correctamente.
-
-### Error: "Access Denied" en S3
-**Solución**: Verifica que el rol MWAAExecutionRole tiene los permisos correctos.
-
-### El crawler falla
-**Solución**: Verifica que el archivo CSV se subió a S3 correctamente.
 
 ---
 
-## 📚 ¿Quieres más detalles?
+## ¿Quieres más detalles?
 
 Lee la guía completa en [LAB-MWAA-ETL.md](LAB-MWAA-ETL.md)
 
----
-
-## ✅ Checklist
-
-- [ ] Ejecutar `setup.sh`
-- [ ] Guardar el PREFIX
-- [ ] Suscribirse al SNS topic
-- [ ] Crear ambiente MWAA
-- [ ] Subir DAG a S3
-- [ ] Importar variables en Airflow
-- [ ] Ejecutar el pipeline
-- [ ] Verificar resultados
-- [ ] Ejecutar `cleanup.sh`
-
----
-
-¡Listo! Ahora tienes un pipeline ETL de producción funcionando en AWS 🚀

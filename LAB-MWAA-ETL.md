@@ -137,11 +137,9 @@ aws s3 mb s3://${PREFIX}-athena-results
 aws glue create-database \
   --database-input '{
     "Name": "etl_lab_db",
-    "Description": "Database for MWAA ETL Lab"
+    "Description": "Base de datos para el Lab de MWAA"
   }'
 ```
-
-**Analogía**: El Data Catalog es como el índice de una biblioteca. Glue Crawler lee tus archivos y crea ese índice automáticamente.
 
 #### Paso 1.3: Crear rol IAM para Glue
 
@@ -486,7 +484,7 @@ SUBNET_IDS=$(aws ec2 describe-subnets --filters "Name=vpc-id,Values=${VPC_ID}" -
 
 aws mwaa create-environment \
   --name mwaa-etl-lab \
-  --airflow-version 2.8.1 \
+  --airflow-version 3.0.6 \
   --source-bucket-arn arn:aws:s3:::${PREFIX}-mwaa \
   --dag-s3-path dags/ \
   --requirements-s3-path requirements/requirements.txt \
@@ -676,58 +674,12 @@ aws s3 rb s3://${PREFIX}-mwaa
 
 ---
 
-## Extensiones opcionales
-
-### Nivel 1: Agregar más transformaciones
-- Modifica `glue_etl_script.py` para agregar columnas calculadas
-- Ejemplo: `total_with_tax = amount * 1.16`
-
-### Nivel 2: Particionamiento
-- Particiona los datos por fecha en Parquet
-- Mejora el rendimiento de Athena
-
-### Nivel 3: Manejo de errores
-- Agrega un task de rollback si falla el ETL
-- Implementa reintentos con backoff exponencial
-
-### Nivel 4: Integración con QuickSight
-- Conecta Athena con QuickSight
-- Crea un dashboard visual de las transacciones
-
-### Nivel 5: CI/CD
-- Automatiza el deploy del DAG con GitHub Actions
-- Implementa tests unitarios para el código de Glue
-
----
-
-## Troubleshooting
-
-### Error: "Crawler failed"
-**Causa**: No hay datos en el path de S3
-**Solución**: Verifica que el CSV se subió correctamente
-
-### Error: "Glue Job timeout"
-**Causa**: Job tarda más de 60 minutos
-**Solución**: Aumenta el timeout en la definición del job
-
-### Error: "Access Denied" en S3
-**Causa**: Rol IAM sin permisos
-**Solución**: Revisa las políticas de IAM
-
-### Error: "Athena query failed"
-**Causa**: Tabla no existe en el catálogo
-**Solución**: Verifica que el crawler procesado terminó exitosamente
-
----
-
 ## Recursos adicionales
 
 - [Documentación oficial de MWAA](https://docs.aws.amazon.com/mwaa/)
 - [Apache Airflow Providers Amazon](https://airflow.apache.org/docs/apache-airflow-providers-amazon/)
 - [AWS Glue Best Practices](https://docs.aws.amazon.com/glue/latest/dg/best-practices.html)
 - [Athena Performance Tuning](https://docs.aws.amazon.com/athena/latest/ug/performance-tuning.html)
-
-
 
 **¿Preguntas o problemas?** Déjame saber y te ayudo a resolverlos.
 
