@@ -455,6 +455,70 @@ aws iam put-role-policy \
   --policy-document file://scripts/mwaa-execution-policy.json
 ```
 
+#### ⚠️ Paso 2.4.1: Permisos adicionales para el rol de ejecución de MWAA
+
+> **IMPORTANTE**: Si creas el ambiente MWAA desde la consola AWS y dejas que AWS genere el rol de ejecución automáticamente (por ejemplo, `AmazonMWAA-mwaa-etl-lab-XXXXX`), ese rol solo incluirá permisos básicos para S3 (bucket de MWAA), CloudWatch Logs y SQS. **No incluirá** los permisos necesarios para Glue, Athena ni SNS, y el DAG fallará con errores `AccessDenied`.
+>
+> Debes agregar manualmente los siguientes permisos al rol de ejecución de MWAA:
+
+**Permisos de S3 sobre los buckets de datos** (el rol auto-generado solo tiene acceso al bucket de MWAA):
+
+```json
+{
+  "Effect": "Allow",
+  "Action": ["s3:GetObject*", "s3:GetBucket*", "s3:List*", "s3:PutObject*"],
+  "Resource": ["arn:aws:s3:::mwaa-etl-lab-*/*", "arn:aws:s3:::mwaa-etl-lab-*"]
+}
+```
+
+**Permisos de Glue** (para crawlers y ETL jobs):
+
+```json
+{
+  "Effect": "Allow",
+  "Action": [
+    "glue:StartCrawler", "glue:GetCrawler",
+    "glue:StartJobRun", "glue:GetJobRun", "glue:GetJob",
+    "glue:GetDatabase", "glue:GetTable", "glue:GetTables",
+    "glue:GetPartition", "glue:GetPartitions", "glue:BatchGetPartition",
+    "glue:CreateTable", "glue:UpdateTable", "glue:DeleteTable"
+  ],
+  "Resource": "*"
+}
+```
+
+**Permisos de Athena** (para validación de datos):
+
+```json
+{
+  "Effect": "Allow",
+  "Action": ["athena:StartQueryExecution", "athena:GetQueryExecution", "athena:GetQueryResults"],
+  "Resource": "*"
+}
+```
+
+**Permisos de SNS** (para notificaciones):
+
+```json
+{
+  "Effect": "Allow",
+  "Action": ["sns:Publish"],
+  "Resource": "*"
+}
+```
+
+**Cómo agregarlos:**
+
+1. Ve a la consola de **IAM → Roles**
+2. Busca el rol de tu ambiente MWAA (ej: `AmazonMWAA-mwaa-etl-lab-XXXXX`)
+3. Click en **Add permissions → Create inline policy**
+4. Selecciona la pestaña **JSON** y pega todos los permisos anteriores dentro de un `Statement` array
+5. Nombra la política (ej: `mwaa-etl-execution-policy`) y guárdala
+
+Alternativamente, si creaste el rol manualmente en el paso anterior con `mwaa-execution-policy.json`, estos permisos ya están incluidos y no necesitas hacer nada adicional.
+
+---
+
 #### Paso 2.5: Crear ambiente MWAA
 
 **Opción A: Desde la consola AWS** (Recomendado para principiantes)
