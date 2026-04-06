@@ -50,7 +50,7 @@ Ve a la consola de AWS → Amazon MWAA → Create environment
 
 **Configuración básica:**
 - Name: `mwaa-etl-lab`
-- Airflow version: `2.8.1`
+- Airflow version: `3.0.6`
 - S3 Bucket: `s3://mwaa-etl-lab-XXXXX-mwaa` (usa tu PREFIX)
 - DAGs folder: `dags/`
 - Requirements file: `requirements/requirements.txt`
